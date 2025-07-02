@@ -1,0 +1,10 @@
+menu "HDMIRX sub config"
+
+config RTK_KDRV_HDMI_ENABLE_HDMI21
+	bool "Enable HDMI 2.1 Support"
+	default y
+	depends on RTK_HDMI_RX
+	help
+	  Enable HDMI 2.1 Support
+
+endmenu

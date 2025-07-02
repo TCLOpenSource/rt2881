@@ -1,0 +1,7 @@
+config RTK_KDRV_ADJUSTER
+	tristate "Task Adjuster driver"
+	default n
+	help
+	  This task adjuster driver is for thread priority adjust
+
+	  If unsure, say N.

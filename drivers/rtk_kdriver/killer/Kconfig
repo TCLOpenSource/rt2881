@@ -1,0 +1,7 @@
+config RTK_KDRV_KILLER
+	tristate "Task Killer driver"
+	default n
+	help
+	  This task killer driver is for RTK low memory killer
+
+	  If unsure, say N.

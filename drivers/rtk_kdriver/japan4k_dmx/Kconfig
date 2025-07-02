@@ -1,0 +1,6 @@
+config RTK_KDRV_JP4K
+	tristate "JAPAN4k DMX Driver"
+	depends on RTK_KDRV_TP
+                default n
+                help
+                  JAPAN4k DMX Driver

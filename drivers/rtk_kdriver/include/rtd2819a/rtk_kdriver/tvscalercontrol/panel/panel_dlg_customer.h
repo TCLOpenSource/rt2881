@@ -1,0 +1,27 @@
+#ifndef _PANLE_DLG_CUSTOMER_H_
+#define _PANLE_DLG_CUSTOMER_H_
+
+#define FLASH_READ_SIZE     64
+
+#define FLASH_READ(_addr, _buff, _size)     spi_read_internal(0, _addr, _size, _buff)
+
+void panel_dlg_customer_timing_setting(PANEL_DLG_MODE panelDlgMode);
+void panel_dlg_customer_get_4k1k120_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_get_4k1k144_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_get_4k2k144_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_get_4k1k240_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_get_4k1k288_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_get_default_dlg_parameter_info(PANEL_DLG_PARAMETER_INFO *panel_dlg_parameter_info);
+void panel_dlg_customer_init_down_sample(PANEL_DLG_MODE panelDlgMode);
+void panel_dlg_customer_switch_panel_mode(PANEL_DLG_MODE panelDlgMode);
+void panel_dlg_customer_operator_panel_vrr_freesync_mode(unsigned char enable);
+unsigned char panel_dlg_customer_get_down_sample(void);
+void panel_dlg_customer_tconless_setting(PANEL_DLG_MODE panelDlgMode);
+unsigned char panel_dlg_customer_get_bypass_memc(void);
+void panel_dlg_customer_set_bypass_memc(unsigned char bypass);
+void panel_dlg_customer_init_memc_bypass(PANEL_DLG_MODE panelDlgMode);
+void panel_dlg_customer_pmic_setting_by_config(PANEL_DLG_MODE panelDlgMode);
+
+#endif
+
+

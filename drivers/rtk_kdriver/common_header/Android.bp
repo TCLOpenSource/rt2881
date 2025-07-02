@@ -1,0 +1,542 @@
+soong_config_module_type_import {
+    from: "vendor/realtek/common/SoongConfig.bp",
+    module_types: [
+        "realtek_cc_defaults",
+    ],
+}
+
+realtek_cc_defaults {
+    name: "librtk_common_headers_defaults",
+    export_include_dirs: ["linux_header/linux"],
+    soong_config_variables: {
+        board: {
+            rtd2841a: {
+                export_include_dirs: [
+                    "rtd2841a/include",
+                    "rtd2841a/IPC/include",
+                    "rtd2841a/IPC/include/xdr",
+                    "rtd2841a/IPC/generate/include/system",
+                ],
+            },
+            rtd2851a: {
+                export_include_dirs: [
+                    "rtd2851a/include",
+                    "rtd2851a/IPC/include",
+                    "rtd2851a/IPC/include/xdr",
+                    "rtd2851a/IPC/generate/include/system",
+                ],
+            },
+            rtd2851f: {
+                export_include_dirs: [
+                    "rtd2851f/include",
+                    "rtd2851f/IPC/include",
+                    "rtd2851f/IPC/include/xdr",
+                    "rtd2851f/IPC/generate/include/system",
+                ],
+            },
+            rtd2816a: {
+                export_include_dirs: [
+                    "rtd2816a/include",
+                    "rtd2816a/IPC/include",
+                    "rtd2816a/IPC/include/xdr",
+                    "rtd2816a/IPC/generate/include/system",
+                ],
+            },
+            rtd2841f: {
+                export_include_dirs: [
+                    "rtd2841f/include",
+                    "rtd2841f/IPC/include",
+                    "rtd2841f/IPC/include/xdr",
+                    "rtd2841f/IPC/generate/include/system",
+                ],
+            },
+            rtd6748: {
+                export_include_dirs: [
+                    "rtd6748/include",
+                    "rtd6748/IPC/include",
+                    "rtd6748/IPC/include/xdr",
+                    "rtd6748/IPC/generate/include/system",
+                ],
+            },
+            rtd6702: {
+                export_include_dirs: [
+                    "rtd6702/include",
+                    "rtd6702/IPC/include",
+                    "rtd6702/IPC/include/xdr",
+                    "rtd6702/IPC/generate/include/system",
+                ],
+            },
+            rtd2885p: {
+                export_include_dirs: [
+                    "rtd2885p/include",
+                    "rtd2885p/IPC/include",
+                    "rtd2885p/IPC/include/xdr",
+                    "rtd2885p/IPC/generate/include/system",
+                ],
+            },
+            rtd2818a: {
+                export_include_dirs: [
+                    "rtd2818a/include",
+                    "rtd2818a/IPC/include",
+                    "rtd2818a/IPC/include/xdr",
+                    "rtd2818a/IPC/generate/include/system",
+                ],
+            },
+            rtd2875q: {
+                export_include_dirs: [
+                    "rtd2875q/include",
+                    "rtd2875q/IPC/include",
+                    "rtd2875q/IPC/include/xdr",
+                    "rtd2875q/IPC/generate/include/system",
+                ],
+            },
+            rtd2819a: {
+                export_include_dirs: [
+                    "rtd2819a/include",
+                    "rtd2819a/IPC/include",
+                    "rtd2819a/IPC/include/xdr",
+                    "rtd2819a/IPC/generate/include/system",
+                ],
+            },
+        },
+    },
+}
+
+realtek_cc_defaults {
+    name: "librtk_common_srcs_defaults",
+    soong_config_variables: {
+        board: {
+            rtd2841a: {
+                srcs: [
+                    "rtd2841a/IPC/src/RPCstruct.c",
+                    "rtd2841a/IPC/src/SVCFunc.c",
+                    "rtd2841a/IPC/src/ClientStub.c",
+
+                    "rtd2841a/IPC/src/rpcapi.c",
+                    "rtd2841a/IPC/src/RPCProxy.c",
+                    "rtd2841a/IPC/src/rpcstubapi.c",
+
+                    "rtd2841a/IPC/src/xdr/xdr.c",
+                    "rtd2841a/IPC/src/xdr/xdr_mem.c",
+                    "rtd2841a/IPC/src/xdr/xdr_array.c",
+                    "rtd2841a/IPC/src/xdr/xdr_float.c",
+                    "rtd2841a/IPC/src/xdr/xdr_process.c",
+                    "rtd2841a/IPC/src/xdr/xdr_ref.c",
+                    "rtd2841a/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2841a/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2841a/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2841a/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2841a/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2841a/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2841a/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2841a/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2841a/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2841a/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2841a/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2841a/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2851a: {
+                srcs: [
+                    "rtd2851a/IPC/src/RPCstruct.c",
+                    "rtd2851a/IPC/src/SVCFunc.c",
+                    "rtd2851a/IPC/src/ClientStub.c",
+
+                    "rtd2851a/IPC/src/rpcapi.c",
+                    "rtd2851a/IPC/src/RPCProxy.c",
+                    "rtd2851a/IPC/src/rpcstubapi.c",
+
+                    "rtd2851a/IPC/src/xdr/xdr.c",
+                    "rtd2851a/IPC/src/xdr/xdr_mem.c",
+                    "rtd2851a/IPC/src/xdr/xdr_array.c",
+                    "rtd2851a/IPC/src/xdr/xdr_float.c",
+                    "rtd2851a/IPC/src/xdr/xdr_process.c",
+                    "rtd2851a/IPC/src/xdr/xdr_ref.c",
+                    "rtd2851a/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2851a/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2851a/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2851a/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2851a/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2851a/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2851a/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2851a/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2851a/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2851a/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2851a/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2851a/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2851f: {
+                srcs: [
+                    "rtd2851f/IPC/src/RPCstruct.c",
+                    "rtd2851f/IPC/src/SVCFunc.c",
+                    "rtd2851f/IPC/src/ClientStub.c",
+
+                    "rtd2851f/IPC/src/rpcapi.c",
+                    "rtd2851f/IPC/src/RPCProxy.c",
+                    "rtd2851f/IPC/src/rpcstubapi.c",
+
+                    "rtd2851f/IPC/src/xdr/xdr.c",
+                    "rtd2851f/IPC/src/xdr/xdr_mem.c",
+                    "rtd2851f/IPC/src/xdr/xdr_array.c",
+                    "rtd2851f/IPC/src/xdr/xdr_float.c",
+                    "rtd2851f/IPC/src/xdr/xdr_process.c",
+                    "rtd2851f/IPC/src/xdr/xdr_ref.c",
+                    "rtd2851f/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2851f/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2851f/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2851f/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2851f/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2851f/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2851f/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2851f/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2851f/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2851f/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2851f/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2851f/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2816a: {
+                srcs: [
+                    "rtd2816a/IPC/src/RPCstruct.c",
+                    "rtd2816a/IPC/src/SVCFunc.c",
+                    "rtd2816a/IPC/src/ClientStub.c",
+
+                    "rtd2816a/IPC/src/rpcapi.c",
+                    "rtd2816a/IPC/src/RPCProxy.c",
+                    "rtd2816a/IPC/src/rpcstubapi.c",
+
+                    "rtd2816a/IPC/src/xdr/xdr.c",
+                    "rtd2816a/IPC/src/xdr/xdr_mem.c",
+                    "rtd2816a/IPC/src/xdr/xdr_array.c",
+                    "rtd2816a/IPC/src/xdr/xdr_float.c",
+                    "rtd2816a/IPC/src/xdr/xdr_process.c",
+                    "rtd2816a/IPC/src/xdr/xdr_ref.c",
+                    "rtd2816a/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2816a/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2816a/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2816a/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2816a/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2816a/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2816a/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2816a/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2816a/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2816a/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2816a/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2816a/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2841f: {
+                srcs: [
+                    "rtd2841f/IPC/src/RPCstruct.c",
+                    "rtd2841f/IPC/src/SVCFunc.c",
+                    "rtd2841f/IPC/src/ClientStub.c",
+
+                    "rtd2841f/IPC/src/rpcapi.c",
+                    "rtd2841f/IPC/src/RPCProxy.c",
+                    "rtd2841f/IPC/src/rpcstubapi.c",
+
+                    "rtd2841f/IPC/src/xdr/xdr.c",
+                    "rtd2841f/IPC/src/xdr/xdr_mem.c",
+                    "rtd2841f/IPC/src/xdr/xdr_array.c",
+                    "rtd2841f/IPC/src/xdr/xdr_float.c",
+                    "rtd2841f/IPC/src/xdr/xdr_process.c",
+                    "rtd2841f/IPC/src/xdr/xdr_ref.c",
+                    "rtd2841f/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2841f/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2841f/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2841f/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2841f/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2841f/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2841f/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2841f/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2841f/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2841f/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2841f/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2841f/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd6748: {
+                srcs: [
+                    "rtd6748/IPC/src/RPCstruct.c",
+                    "rtd6748/IPC/src/SVCFunc.c",
+                    "rtd6748/IPC/src/ClientStub.c",
+
+                    "rtd6748/IPC/src/rpcapi.c",
+                    "rtd6748/IPC/src/RPCProxy.c",
+                    "rtd6748/IPC/src/rpcstubapi.c",
+
+                    "rtd6748/IPC/src/xdr/xdr.c",
+                    "rtd6748/IPC/src/xdr/xdr_mem.c",
+                    "rtd6748/IPC/src/xdr/xdr_array.c",
+                    "rtd6748/IPC/src/xdr/xdr_float.c",
+                    "rtd6748/IPC/src/xdr/xdr_process.c",
+                    "rtd6748/IPC/src/xdr/xdr_ref.c",
+                    "rtd6748/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd6748/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd6748/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd6748/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd6748/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd6748/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd6748/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd6748/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd6748/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd6748/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd6748/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd6748/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd6702: {
+                srcs: [
+                    "rtd6702/IPC/src/RPCstruct.c",
+                    "rtd6702/IPC/src/SVCFunc.c",
+                    "rtd6702/IPC/src/ClientStub.c",
+
+                    "rtd6702/IPC/src/rpcapi.c",
+                    "rtd6702/IPC/src/RPCProxy.c",
+                    "rtd6702/IPC/src/rpcstubapi.c",
+
+                    "rtd6702/IPC/src/xdr/xdr.c",
+                    "rtd6702/IPC/src/xdr/xdr_mem.c",
+                    "rtd6702/IPC/src/xdr/xdr_array.c",
+                    "rtd6702/IPC/src/xdr/xdr_float.c",
+                    "rtd6702/IPC/src/xdr/xdr_process.c",
+                    "rtd6702/IPC/src/xdr/xdr_ref.c",
+                    "rtd6702/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd6702/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd6702/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd6702/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd6702/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd6702/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd6702/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd6702/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd6702/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd6702/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd6702/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd6702/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2885p: {
+                srcs: [
+                    "rtd2885p/IPC/src/RPCstruct.c",
+                    "rtd2885p/IPC/src/SVCFunc.c",
+                    "rtd2885p/IPC/src/ClientStub.c",
+
+                    "rtd2885p/IPC/src/rpcapi.c",
+                    "rtd2885p/IPC/src/RPCProxy.c",
+                    "rtd2885p/IPC/src/rpcstubapi.c",
+
+                    "rtd2885p/IPC/src/xdr/xdr.c",
+                    "rtd2885p/IPC/src/xdr/xdr_mem.c",
+                    "rtd2885p/IPC/src/xdr/xdr_array.c",
+                    "rtd2885p/IPC/src/xdr/xdr_float.c",
+                    "rtd2885p/IPC/src/xdr/xdr_process.c",
+                    "rtd2885p/IPC/src/xdr/xdr_ref.c",
+                    "rtd2885p/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2885p/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2885p/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2885p/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2885p/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2885p/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2885p/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2885p/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2885p/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2885p/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2885p/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2885p/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2818a: {
+                srcs: [
+                    "rtd2818a/IPC/src/RPCstruct.c",
+                    "rtd2818a/IPC/src/SVCFunc.c",
+                    "rtd2818a/IPC/src/ClientStub.c",
+
+                    "rtd2818a/IPC/src/rpcapi.c",
+                    "rtd2818a/IPC/src/RPCProxy.c",
+                    "rtd2818a/IPC/src/rpcstubapi.c",
+
+                    "rtd2818a/IPC/src/xdr/xdr.c",
+                    "rtd2818a/IPC/src/xdr/xdr_mem.c",
+                    "rtd2818a/IPC/src/xdr/xdr_array.c",
+                    "rtd2818a/IPC/src/xdr/xdr_float.c",
+                    "rtd2818a/IPC/src/xdr/xdr_process.c",
+                    "rtd2818a/IPC/src/xdr/xdr_ref.c",
+                    "rtd2818a/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2818a/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2818a/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2818a/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2818a/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2818a/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2818a/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2818a/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2818a/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2818a/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2818a/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2818a/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2875q: {
+                srcs: [
+                    "rtd2875q/IPC/src/RPCstruct.c",
+                    "rtd2875q/IPC/src/SVCFunc.c",
+                    "rtd2875q/IPC/src/ClientStub.c",
+
+                    "rtd2875q/IPC/src/rpcapi.c",
+                    "rtd2875q/IPC/src/RPCProxy.c",
+                    "rtd2875q/IPC/src/rpcstubapi.c",
+
+                    "rtd2875q/IPC/src/xdr/xdr.c",
+                    "rtd2875q/IPC/src/xdr/xdr_mem.c",
+                    "rtd2875q/IPC/src/xdr/xdr_array.c",
+                    "rtd2875q/IPC/src/xdr/xdr_float.c",
+                    "rtd2875q/IPC/src/xdr/xdr_process.c",
+                    "rtd2875q/IPC/src/xdr/xdr_ref.c",
+                    "rtd2875q/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2875q/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2875q/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2875q/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2875q/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2875q/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2875q/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2875q/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2875q/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2875q/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2875q/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2875q/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+            rtd2819a: {
+                srcs: [
+                    "rtd2819a/IPC/src/RPCstruct.c",
+                    "rtd2819a/IPC/src/SVCFunc.c",
+                    "rtd2819a/IPC/src/ClientStub.c",
+
+                    "rtd2819a/IPC/src/rpcapi.c",
+                    "rtd2819a/IPC/src/RPCProxy.c",
+                    "rtd2819a/IPC/src/rpcstubapi.c",
+
+                    "rtd2819a/IPC/src/xdr/xdr.c",
+                    "rtd2819a/IPC/src/xdr/xdr_mem.c",
+                    "rtd2819a/IPC/src/xdr/xdr_array.c",
+                    "rtd2819a/IPC/src/xdr/xdr_float.c",
+                    "rtd2819a/IPC/src/xdr/xdr_process.c",
+                    "rtd2819a/IPC/src/xdr/xdr_ref.c",
+                    "rtd2819a/IPC/src/xdr/xdr_sizeof.c",
+                    "rtd2819a/IPC/generate/src/system/AudioRPC_Agent_svc.c",
+                    "rtd2819a/IPC/generate/src/system/AudioRPC_System_clnt.c",
+                    "rtd2819a/IPC/generate/src/system/AudioRPCBaseDS_xdr.c",
+                    "rtd2819a/IPC/generate/src/system/AudioRPC_Agent_xdr.c",
+                    "rtd2819a/IPC/generate/src/system/AudioRPC_System_xdr.c",
+                    "rtd2819a/IPC/generate/src/system/RPCBaseDS_xdr.c",
+
+                    "rtd2819a/IPC/generate/src/system/VideoRPC_Agent_svc.c",
+                    "rtd2819a/IPC/generate/src/system/VideoRPC_System_clnt.c",
+                    "rtd2819a/IPC/generate/src/system/VideoRPC_Agent_xdr.c",
+                    "rtd2819a/IPC/generate/src/system/VideoRPC_System_xdr.c",
+                    "rtd2819a/IPC/generate/src/system/VideoRPCBaseDS_xdr.c",
+                ],
+                shared_libs: ["librtk_pli"],
+                header_libs: [
+                    "librtk_frameworks_utils_headers",
+                    "librtk_frameworks_libs_headers",
+                ],
+            },
+        },
+    },
+}
+
+cc_library_headers {
+    name: "librtk_common_headers",
+    defaults: ["librtk_common_headers_defaults"],
+    vendor_available: true,
+    recovery_available: true,
+}
+
+cc_library_shared {
+    name: "librtk_common",
+
+    defaults: ["librtk_common_srcs_defaults"],
+
+    cppflags: [
+        "-Wextra",
+        "-Wall",
+        "-Werror",
+    ],
+
+    cflags: [
+        "-DENABLE_FW2SYSTEM_RPC_HOOK_FUNCTION_IN_COMMON",
+    ],
+
+    header_libs: [
+        "librtk_common_headers",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libc",
+    ],
+
+    vendor_available: true,
+    recovery_available: true,
+}

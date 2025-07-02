@@ -1,0 +1,7 @@
+
+#  When trigger userdebug build, 
+#  build_android.sh script will merge below kernel debug config to original defconfig.
+#  https://mm2sd.rtkbf.com/gerrit/c/realtek/build/android/system/+/370691
+CONFIG_DEBUG_FS=y
+CONFIG_DEBUG_KMEMLEAK=y
+CONFIG_DEBUG_KMEMLEAK_DEFAULT_OFF=y

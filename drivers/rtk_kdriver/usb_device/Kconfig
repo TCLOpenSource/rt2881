@@ -1,0 +1,4 @@
+config RTK_KDRV_USB_DEVICE
+    bool "RTK USB Device driver support"
+    depends on USB
+	default n

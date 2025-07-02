@@ -1,0 +1,15 @@
+menu "Realtek platform PCIe ethernet drivers"
+
+config RTK_KDRV_PCI_ETN
+    bool "Enable ethernet drivers of PCIe"
+    depends on RTK_KDRV_PCIE
+	default n
+
+config R8125
+    tristate "Realtek R8125 PCIe ethernet"
+    depends on RTK_KDRV_PCI_ETN
+    default n
+    help
+      enable R8125 PCIe driver
+
+endmenu

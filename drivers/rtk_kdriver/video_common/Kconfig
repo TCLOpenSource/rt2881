@@ -1,0 +1,15 @@
+menu "VIDEO_COMMON"
+
+config RTK_VIDEO_COMMON
+	tristate "Enable video common Support"
+	default n
+	help
+		Enable video common
+
+config RTK_DYNAMIC_ENABLE_VIDEO_COMMON
+	bool "Dynamic Enable video common dynamic"
+	default n
+	help
+		dynamic Enable video common
+
+endmenu

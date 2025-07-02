@@ -1,0 +1,10 @@
+rtd_part_outl(0x18047844,28,28,0x0);   //REG_TMDS_POW[28]=1   => 0x18007844 Bit28 enable P2S & Mbias
+rtd_part_outl(0x18047844,12,12,0x0);   //REG_TMDS_POWA[12]=1  => 0x18007844 Bit12 enable channel B output buffer
+rtd_part_outl(0x18047844,8,8,0x0);     //REG_TMDS_POWB[8]=1   => 0x18007844 Bit8  enable channel G output buffer
+rtd_part_outl(0x18047844,4,4,0x0);     //REG_TMDS_POWC[4]=1   => 0x18007844 Bit4  enable channel R output buffer
+rtd_part_outl(0x18047844,0,0,0x0);     //REG_TMDS_POWCK[0]=1  => 0x18007844 Bit0  enable channel CK output buffer
+
+rtd_part_outl(0x18047824,4,4,0x0);//REG_PLL_POW[4]=1
+rtd_part_outl(0x18047818,4,4,0x0);//REG_PLLDISP_POW[4] =1
+
+rtd_part_outl(0x1804790c,10,10,0x0);//REG_PLL_LDO_POW[10]=1

@@ -1,0 +1,15 @@
+rtd_outl(0xb8000104, 0x00010001); //rst
+rtd_outl(0xb8000114, 0x00010001); //clk
+
+//rtd_outl(0x18006b44, 0x00000000);//audio bb power off
+rtd_part_outl(0xb8006b44, 11,10,0);//adcfe/adc power off
+rtd_part_outl(0xb8006b44, 7,7,0);//mbias power off
+rtd_part_outl(0xb8006b44, 8,8,0);//dac power off
+rtd_part_outl(0xb8006b44, 3,3,0);//hpo power off
+
+rtd_outl(0xb8000114, 0x00010000); //clk
+rtd_part_outl(0xb8000114, 31, 0, 0x00030000); //CLKEN_TVSB1/CLKEN_AUDIO_PRE512FS/CLKEN_AUDIO
+
+//rtd_outl(0x180b8004, 0x00000000);//earc tx power off
+
+rtd_part_outl(0xb80b8004,31,31,0);

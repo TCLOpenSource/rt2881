@@ -1,0 +1,55 @@
+#
+# Makefile for the Realtek HDMI TX drivers.
+#
+##ROS_INCLUDE_PATH +=  -I ROS/include
+##subdir-ccflags-y +=  $(ROS_INCLUDE_PATH) $(HDMITX_INCLUDE_PATH)
+subdir-ccflags-y +=  $(HDMITX_INCLUDE_PATH)
+HDMITX_KDRV_DIR = tvscalercontrol/rtd6702/hdmitx_new
+
+HDMI_OBJ_DIR = obj
+HDMI_SRC_DIR = src
+HDMI_PHY_DIR = phy
+HDMI_LIB_DIR = lib
+HDMI_DSCE_DIR = dsce
+## HDMITX PHY
+ifeq (y,$(filter y, $(CONFIG_ENABLE_HDMITX_PHY)))
+obj-y += $(HDMI_PHY_DIR)/hdmitx_phy.o $(HDMI_PHY_DIR)/hdmitx_phy_timing_table.o
+obj-y += $(HDMI_PHY_DIR)/ScalerHdmiPhyTx.o
+obj-y += $(HDMI_PHY_DIR)/hdmitx_phy_frl.o $(HDMI_PHY_DIR)/hdmitx_phy_tmds.o
+endif
+
+## HDMITX 2.0
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmiMacTx0.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx0_EXINT0.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx0FillPacket.o
+## Edid
+obj-y += $(HDMI_SRC_DIR)/hdmitx_edid.o $(HDMI_SRC_DIR)/hdmitx_edidfori2c.o $(HDMI_LIB_DIR)/hdmitx_Convert.o $(HDMI_LIB_DIR)/hdmitx_lib_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank6_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank9_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank8_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank38_ex.o
+## HDMITX 2.1
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmi21MacTx.o $(HDMI_SRC_DIR)/ScalerHdmi21MacTx0.o $(HDMI_SRC_DIR)/ScalerHdmi21MacTx0FillPacket.o $(HDMI_SRC_DIR)/ScalerHdmi21TxLinkTraining.o
+
+## TX packet bypass control
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmiMacTx0PktBypass.o
+
+## Scaler
+obj-y += $(HDMI_SRC_DIR)/ScalerTx_ctrl.o $(HDMI_SRC_DIR)/ScalerTx_init.o $(HDMI_SRC_DIR)/ScalerTx.o $(HDMI_SRC_DIR)/hdmitx_edid.o $(HDMI_SRC_DIR)/hdmitx_edidfori2c.o $(HDMI_LIB_DIR)/hdmitx_Convert.o $(HDMI_LIB_DIR)/hdmitx_lib_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank6_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank9_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank8_ex.o $(HDMI_LIB_DIR)/hdmitx_lunchbank38_ex.o
+
+## TX driver state handler
+obj-y += $(HDMI_SRC_DIR)/hdmitx_driver.o
+
+## TX script for Zebu HDMI repeater function verify
+ifeq ($(CONFIG_HDMITX_TX_SCRIPT_SUPPORT),y)
+obj-y += $(HDMI_LIB_DIR)/hdmitx_script.o
+endif
+
+obj-y += $(HDMI_SRC_DIR)/hdmitx_init.o $(HDMI_SRC_DIR)/hdmitx_ctrl.o $(HDMI_SRC_DIR)/hdmitx_lib.o $(HDMI_SRC_DIR)/Core_qevent_hdmitx_handler.o
+
+obj-y += $(HDMI_SRC_DIR)/hdmitx.o
+obj-y += $(HDMI_DSCE_DIR)/hdmitx_dsc.o $(HDMI_DSCE_DIR)/hdmitx_dsc_pps_table.o
+obj-y += $(HDMI_SRC_DIR)/hdmitx_vbedev.o
+#KBUILD_CFLAGS += -Wall -Werror
+KBUILD_CFLAGS += -Wall
+
+clean: $(DEP_MODULES_CLEAN)
+	rm -f *.o $(HDMITX_LIB_HOME)/src/*.o $(HDMITX_LIB_HOME)/verify/*.o
+	rm -f $(HDMITX_KDRV_DIR)/Makefile $(HDMITX_KDRV_DIR)/*.o $(HDMITX_KDRV_DIR)/obj/*.o
+
+cleanall: clean
+

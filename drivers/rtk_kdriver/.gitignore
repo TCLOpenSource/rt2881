@@ -1,0 +1,11 @@
+.gitignorei
+*.cmd
+*.o
+*.o.*
+*.builtin
+*.order
+*.a
+common
+common/*
+rtk_dmic
+rtk_dmic/*

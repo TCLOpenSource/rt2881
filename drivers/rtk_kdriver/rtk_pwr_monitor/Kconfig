@@ -1,0 +1,11 @@
+menu "Realtek Power monitor"
+
+config RTK_KDRV_PWR_MONITOR
+	tristate "Use Realtek Power Monitor driver"
+	depends on RTK_KDRIVER_SUPPORT
+	select RTK_KDRIVER
+	default n
+	help
+		RTK POWER MONITOR
+endmenu
+

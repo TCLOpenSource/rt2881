@@ -1,0 +1,14 @@
+config RTK_KDRV_QUICKSHOW
+	tristate "Quick-Show driver"
+    select RTK_KDRV_QUICKSHOW_STATUS
+	help
+	  This quick show driver is for RTK quick-show feature
+
+	  If unsure, say N.
+
+config RTK_KDRV_QUICKSHOW_STATUS
+	tristate "Quick-Show status driver"
+	help
+	  This quick show driver is for RTK quick-show feature
+
+	  If unsure, say N.

@@ -1,0 +1,7 @@
+#ifndef _LIBDMA_COMMON_SCALERDRV_H__
+#define _LIBDMA_COMMON_SCALERDRV_H__
+
+#define MDOMAIN_CMP_LINE_MODE_BUFFER_SIZE(CMP_WID, CMP_LEN, CMP_RATIO) ((calc_comp_line_sum_bit((CMP_WID), (CMP_RATIO)) * 128 / 8) * (CMP_LEN) + FINAL_BURST_LENTH)
+
+
+#endif

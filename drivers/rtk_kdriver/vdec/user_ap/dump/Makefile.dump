@@ -1,0 +1,20 @@
+#Cross = /cross/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi-
+
+#BIN_NAME := rtk_vdec_dump
+#BIN_DIR := ./bin
+#BIN_PATH := $(BIN_DIR)/$(BIN_NAME)
+SRC_FILES += $(DUMP_DIR)/$(BIN_NAME).cpp
+INC_DIRS += \
+	../../include/$(Chip)/rtk_kdriver\
+	./mock
+
+IFLAGS = $(patsubst %, -I%, $(INC_DIRS))
+CXXFLAGS += -static -pthread
+
+all: target
+
+target:
+	$(Cross)g++ $(SRC_FILES) $(IFLAGS) $(CXXFLAGS) -o $(BIN_PATH)
+
+clean:
+	rm -f $(BIN_PATH)

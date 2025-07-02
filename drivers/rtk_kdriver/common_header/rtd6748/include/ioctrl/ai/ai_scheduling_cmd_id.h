@@ -1,0 +1,42 @@
+#ifndef AI_SCHED_CMD_ID_H
+#define AI_SCHED_CMD_ID_H
+
+#include "ai_types.h"
+
+#define AI_SCHED_DEVICE_NAME "aisched"
+#define AI_SCHED_IOC_MAGIC 'A'
+
+enum {
+    AI_SCHED_CMD_GET_SPEC = 0,
+    AI_SCHED_CMD_SET_PRIORITY = 1,
+    AI_SCHED_CMD_SET_READY = 2,
+    AI_SCHED_CMD_LOCK = 3,
+    AI_SCHED_CMD_UNLOCK = 4,
+    AI_SCHED_CMD_CANCEL = 5,
+};
+
+typedef struct {
+	u32 pid;
+	u32 tid;
+} AI_SCHED_GKID;
+
+typedef struct {
+    u32 highestPriority;
+    u32 lowestPriority;
+} AI_SCHED_SPEC;
+
+typedef struct {
+    AI_SCHED_GKID gid;
+    u32 priority;
+    s32 waitTime;    // in ms
+} AI_SCHED_DESC;
+
+
+#define AI_SCHED_IOC_GET_SPEC     _IOR(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_GET_SPEC, AI_SCHED_SPEC)
+#define AI_SCHED_IOC_SET_PRIORITY _IOW(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_SET_PRIORITY, AI_SCHED_DESC)
+#define AI_SCHED_IOC_SET_READY    _IOW(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_SET_READY, AI_SCHED_GKID)
+#define AI_SCHED_IOC_LOCK         _IOW(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_LOCK, AI_SCHED_GKID)
+#define AI_SCHED_IOC_UNLOCK       _IOW(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_UNLOCK, AI_SCHED_GKID)
+#define AI_SCHED_IOC_CANCEL       _IOW(AI_SCHED_IOC_MAGIC, AI_SCHED_CMD_CANCEL, AI_SCHED_GKID)
+
+#endif //AI_SCHED_CMD_ID_H

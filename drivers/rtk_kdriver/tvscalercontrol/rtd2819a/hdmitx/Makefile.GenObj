@@ -1,0 +1,76 @@
+#
+# Makefile for the Realtek HDMI TX drivers.
+#
+#include $(TOPDIR)/.config
+
+HDMI_SRC_DIR = txdrv/src
+
+## HDMITX PHY
+obj-y += $(HDMI_SRC_DIR)/hdmitx_phy.o $(HDMI_SRC_DIR)/hdmitx_phy_timing_table.o
+obj-y += $(HDMI_SRC_DIR)/hdmitx_phy_swing_table_general.o
+
+## HDMITX 2.0
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmiMacTx0.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx.o $(HDMI_SRC_DIR)/ScalerHdmiPhyTx.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx0_EXINT0.o $(HDMI_SRC_DIR)/ScalerHdmiMacTx0FillPacket.o
+## Edid
+obj-y += $(HDMI_SRC_DIR)/hdmitx_edid.o $(HDMI_SRC_DIR)/hdmitx_edidfori2c.o $(HDMI_SRC_DIR)/hdmitx_Convert.o
+## HDMITX 2.1
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmi21MacTx.o $(HDMI_SRC_DIR)/ScalerHdmi21MacTx0.o $(HDMI_SRC_DIR)/ScalerHdmi21MacTx0FillPacket.o $(HDMI_SRC_DIR)/ScalerHdmi21TxLinkTraining.o
+
+## TX packet bypass control
+obj-y += $(HDMI_SRC_DIR)/ScalerHdmiMacTx0PktBypass.o
+
+
+## HDMITX HDCP
+#ifeq (y,$(filter y, $(CONFIG_HDMITX_20_21_HDCP_SUPPORT)))
+## HDMITX 2.0
+#obj-y += $(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp14Tx $(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp14Tx0 $(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp14Tx_EXINT0 $(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp2Tx #$(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp2Tx0 $(HDMITX_LIB_HOME)/src/ScalerHdmiHdcp2Tx_EXINT0
+## HDMITX 2.1
+#obj-y += $(HDMITX_LIB_HOME)/src/ScalerHdmi21Hdcp2Tx0
+#endif
+
+## Scaler
+obj-y += $(HDMI_SRC_DIR)/ScalerTx_ctrl.o $(HDMI_SRC_DIR)/ScalerTx_init.o $(HDMI_SRC_DIR)/ScalerTx.o $(HDMI_SRC_DIR)/hdmitx_edid.o $(HDMI_SRC_DIR)/hdmitx_edidfori2c.o $(HDMI_SRC_DIR)/hdmitx_Convert.o
+
+
+## TX driver state handler
+obj-y += hdmitx_driver.o
+
+## TX script for Zebu HDMI repeater function verify
+ifeq ($(CONFIG_HDMITX_TX_SCRIPT_SUPPORT),y)
+obj-y += hdmitx_script.o
+endif
+
+obj-y += hdmitx_init.o hdmitx_ctrl.o hdmitx_lib.o Core_qevent_hdmitx_handler.o
+
+
+#KBUILD_CFLAGS += -Wall -Werror
+KBUILD_CFLAGS += -Wall
+
+include $(RULES_MAKES)
+
+all:
+#	rm -rf $(HDMITX_LIB_HOME)/obj
+#	mkdir  $(HDMITX_LIB_HOME)/obj
+	cp -f $(HDMITX_LIB_HOME)/src/*.rel obj
+	cp -f $(HDMITX_LIB_HOME)/src/*.sym obj
+	cp -f $(HDMITX_LIB_HOME)/src/*.lst obj
+	cp -f obj/*	$(TOPDIR)/output/code/
+	mv *.asm  $(TOPDIR)/output/code/
+	mv *.rel $(TOPDIR)/output/code/
+	mv *.lst $(TOPDIR)/output/code/
+	mv *.sym $(TOPDIR)/output/code/
+
+	@#cp -f $(HDMITX_LIB_HOME)/src/{*.rel,*.sym,*.lst} $(HDMITX_LIB_HOME)/verify/{*.rel,*.sym,*.lst} $(TOPDIR)/output/code/
+	$(info [Makefile] save HDMITX OBJ files...)
+	$(Q)find $(obj)/$(HDMI_SRC_DIR) -iname '*.o' -a ! -iname 'built-in.o' -type f | xargs $(obj)/../../../../../prebuild/toolchain/sdcc-4.0.0-8/bin/sdar -rcs hdmitx.lib
+	$(Q)rm -fr $(obj)/obj/obj $(obj)/obj/sym $(obj)/obj/drivers $(obj)/obj/hdmitx.lib
+	$(Q)cp -f hdmitx.lib $(obj)/obj/.
+	$(Q)mkdir -p $(obj)/obj/sym
+	$(Q)find $(obj)/$(HDMI_SRC_DIR) -iname '*.sym' -type f -exec cp -r {} $(obj)/obj/sym/ \;
+	$(Q)tar -cvzf $(obj)/prebuild/tx_obj.tgz $(obj)/obj/hdmitx.lib $(obj)/obj/sym
+
+clean: $(DEP_MODULES_CLEAN)
+	-rm -rf *.o *.a *.rst *.lst *.asm *.sym *~ obj/obj obj/sym obj/drivers txdrv/src/*.o
+#	rm -f *.rel $(HDMITX_LIB_HOME)/src/{*.rel,*.asm,*.lst,*.sym} $(HDMITX_LIB_HOME)/verify/{*.rel,*.asm,*.lst,*.sym}
+
+cleanall: clean

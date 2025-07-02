@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# RTL818X Wireless LAN device configuration
+#
+config RTL8125
+	tristate "Realtek 8125 PCI support"
+	depends on PCI
+	select RTLWIFI
+	select RTLWIFI_PCI
+	---help---
+	  This is a driver for RTL8125 based cards.
+
+	  Thanks to Realtek for their support!
+

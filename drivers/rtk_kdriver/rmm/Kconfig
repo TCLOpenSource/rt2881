@@ -1,0 +1,59 @@
+config REALTEK_MEMORY_MANAGEMENT
+	tristate "Realtek memory management"
+	default y
+	help
+		Code added for Realtek memory management
+
+config CMA_RTK_ALLOCATOR
+	bool "Use RTK blueprint"
+	default y
+	depends on REALTEK_MEMORY_MANAGEMENT
+	help
+	  Use RTK blueprint to replace bitmap allocator.
+
+config CMA_FIRST_POLICY
+	bool "Use CMA memory first"
+	default n
+	depends on REALTEK_MEMORY_MANAGEMENT
+	help
+	  Use CMA memory first if user allocate movable memory.
+
+config REALTEK_MANAGE_OVERLAPPED_REGION
+	bool "Manage the memory region overlapped by RBUS & NOR."
+	default n
+	depends on CMA_RTK_ALLOCATOR && REALTEK_MEMORY_MANAGEMENT
+	help
+		Put the memory region overlapped by RBUS & NOR under the control of linux.
+
+config REALTEK_DEV_MEM
+	tristate "Provide the /dev/rtkmem interface."
+	default n
+	help
+		Provide an interface to replace /dev/mem.
+
+config REALTEK_IOMMU
+    tristate "realtek iommu driver"
+    default n
+    depends on REALTEK_MEMORY_MANAGEMENT
+    select IOMMU_DMA if IOMMU_SUPPORT
+    help
+      The realtek iommu driver.
+
+config REALTEK_IOMMU_CONTIG_MEMORY_HACK
+    bool "realtek iommu with contiguous memory hack"
+    default n
+    depends on REALTEK_IOMMU
+    help
+      A hack of using contiguous memory on iommu driver,
+      this can be used for run on non-iommu hw platform.
+
+config REALTEK_IOMMU_VERIFY
+    bool "realtek iommu verifier"
+    default n
+    depends on REALTEK_IOMMU
+    help
+      The testcase of iommu driver for HW verify.
+
+source "drivers/rtk_kdriver/rmm/dma-buf/Kconfig"
+source "drivers/rtk_kdriver/rmm/ion/Kconfig"
+

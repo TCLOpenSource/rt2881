@@ -1,0 +1,435 @@
+
+#ifndef _RTK_MEMORY_LAYOUT_H
+#define _RTK_MEMORY_LAYOUT_H
+
+/**
+ *  --- TV 4K memory layout start ---
+ */
+
+#if defined (CONFIG_IMG_DEMOD_CARVED_OUT_ADDRESS)
+#define DEMOD_CARVED_OUT CONFIG_IMG_DEMOD_CARVED_OUT_ADDRESS  // 0x15400000
+#else
+#define DEMOD_CARVED_OUT 0x02000000  //compatible for previous released version.
+#endif  //#if defined (CONFIG_IMG_DEMOD)
+
+
+#define AUDIO_BUFFER_START (0x14000000)
+#define AUDIO_BUFFER_SIZE  (20*_MB_)
+
+
+#define VIDEO_RINGBUFFER_START         0x3f000000
+#define VIDEO_RINGBUFFER_SIZE			0x1000000
+//#define VIDEO_RINGBUFFER_SIZE_K2L_ONLY 		 0x1800000
+//#define AUDIO_RINGBUFFER_START         (VIDEO_RINGBUFFER_START+VIDEO_RINGBUFFER_SIZE)
+//#define AUDIO_RINGBUFFER_SIZE                      0 //0x00600000
+
+
+#if IS_ENABLED(CONFIG_REALTEK_LOGBUF)
+#define CONST_LOGBUF_MEM_ADDR_START (0x1ca00000)
+#define CONST_LOGBUF_MEM_SIZE (512*1024)
+#else
+#define CONST_LOGBUF_MEM_ADDR_START 0
+#define CONST_LOGBUF_MEM_SIZE 0
+#endif
+
+#ifdef CONFIG_CUSTOMER_TV006	//for GAL reserve mem, 4MB align
+extern const int GAL_MEM_SIZE;
+extern const int GAL_MEM_ADDR_START;
+#else
+#define GAL_MEM_SIZE 0
+#define GAL_MEM_ADDR_START 0
+#endif
+
+#define VBM_START_ADDRESS_KERNEL       0x20800000  // + e000000 (+ 224M)
+#define MEMC_START_ADDRESS_KERNEL      0x2e800000  // + 0000000 (+   0M)
+#define MDOMAIN_START_ADDRESS_KERNEL   0x2e800000  // + 2000000 (+  32M)
+#define DI_NR_START_ADDRESS_KERNEL     0x30800000  // + 0a00000 (+  10M)
+#define VIP_START_ADDRESS_KERNEL       0x31200000  // + 0300000 (+   3M)
+#define OD_START_ADDRESS_KERNEL        0x31500000  // + 0900000 (+   9M)
+#define NN_START_ADDRESS_KERNEL        0x31e00000  // + 0100000 (+   1M)
+
+#define VDEC_BUFFER_START (VBM_START_ADDRESS_KERNEL)
+#define VDEC_BUFFER_SIZE 224*_MB_    // 4K lossy 60% luma 50% chroma, VVC/AVS3 luma not compressed, support dual decode 2K+4K+decimate
+
+#if (VBM_START_ADDRESS_KERNEL != VDEC_BUFFER_START)
+#error "VBM size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_MEMC_START (VDEC_BUFFER_START + VDEC_BUFFER_SIZE)
+#define SCALER_MEMC_SIZE  (0*_MB_)  // No MEMC in Mac series
+
+#if (MEMC_START_ADDRESS_KERNEL != SCALER_MEMC_START)
+#error "Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_MDOMAIN_START (SCALER_MEMC_START + SCALER_MEMC_SIZE)
+#define SCALER_MDOMAIN_SIZE (32*_MB_) // 4K 16bit x 2 frames (2 pixel mode)
+
+#if (MDOMAIN_START_ADDRESS_KERNEL != SCALER_MDOMAIN_START)
+#error "Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_DI_NR_START (SCALER_MDOMAIN_START + SCALER_MDOMAIN_SIZE)
+#define SCALER_DI_NR_SIZE (10*_MB_) // 4K rolling mode w/o MASNR
+
+#if (DI_NR_START_ADDRESS_KERNEL != SCALER_DI_NR_START)
+#error "Scaler DI_NR size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_VIP_START (SCALER_DI_NR_START + SCALER_DI_NR_SIZE)
+#define SCALER_VIP_SIZE  (3*_MB_)
+
+#if (VIP_START_ADDRESS_KERNEL != SCALER_VIP_START)
+#error "Scaler VIP size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_OD_START (SCALER_VIP_START + SCALER_VIP_SIZE)
+#define SCALER_OD_SIZE  9*_MB_  // RGB 8 bits
+
+#if (OD_START_ADDRESS_KERNEL != SCALER_OD_START)
+#error "Scaler OD size doesn't match for kernel & drivers!"
+#endif
+
+#define SCALER_NN_START (SCALER_OD_START + SCALER_OD_SIZE)
+#define SCALER_NN_SIZE (1*_MB_)
+
+#if (NN_START_ADDRESS_KERNEL != SCALER_NN_START)
+#error "Scaler NN size doesn't match for kernel & drivers!"
+#endif
+
+#define SCLAER_MODULE_START SCALER_MEMC_START
+#define SCALER_MODULE_SIZE_QUERY (SCALER_MEMC_SIZE + SCALER_MDOMAIN_SIZE + SCALER_DI_NR_SIZE + SCALER_VIP_SIZE + SCALER_OD_SIZE + SCALER_NN_SIZE)
+#define SCALER_MODULE_SIZE DO_ALIGNMENT(SCALER_MODULE_SIZE_QUERY, 4*_MB_)
+#define SCALER_MODULE_BAND (SCALER_MODULE_SIZE - SCALER_MODULE_SIZE_QUERY)
+
+#if (SCALER_MODULE_SIZE & 0x3FFFFF) // 4MB align
+#error "Scaler module size didn't follow 4MB alignment"
+#endif
+
+#define DEMUX_TP_BUFFER_START (SCLAER_MODULE_START + SCALER_MODULE_SIZE)
+#define DEMUX_TP_BUFFER_SIZE 0  // must be 4MB page block alignment
+
+#ifdef CONFIG_HIGHMEM_BW_CMA_REGION
+#define BW_HIGH_CMA_SIZE        (88*_MB_)	// Better BW CMA size in HighMem
+#endif
+
+/**
+ *  --- TV 4K memory layout end ---
+ */
+
+/**
+ *  --- TV 4K memory layout (Non-Carvedout) start ---
+ */
+
+#define NC_VIDEO_RINGBUFFER_START         0x3f000000
+#define NC_VIDEO_RINGBUFFER_SIZE			0x1000000
+//#define NC_VIDEO_RINGBUFFER_SIZE_K2L_ONLY 		 0x1800000
+//#define NC_AUDIO_RINGBUFFER_START         (NC_VIDEO_RINGBUFFER_START+NC_VIDEO_RINGBUFFER_SIZE)
+//#define NC_AUDIO_RINGBUFFER_SIZE                      0 //0x00600000
+
+#define NC_VBM_START_ADDRESS_KERNEL       0x20800000  // + e000000 (+ 224M)
+#define NC_MEMC_START_ADDRESS_KERNEL      0x2e800000  // + 0000000 (+   0M)
+#define NC_MDOMAIN_START_ADDRESS_KERNEL   0x2e800000  // + 0000000 (+   0M)
+#define NC_DI_NR_START_ADDRESS_KERNEL     0x2e800000  // + 0000000 (+   0M)
+#define NC_VIP_START_ADDRESS_KERNEL       0x2e800000  // + 0300000 (+   3M)
+#define NC_OD_START_ADDRESS_KERNEL        0x2eb00000  // + 0900000 (+   9M)
+#define NC_NN_START_ADDRESS_KERNEL        0x2f400000  // + 0100000 (+   1M)
+
+#define NC_VDEC_BUFFER_START (NC_VBM_START_ADDRESS_KERNEL)
+#define NC_VDEC_BUFFER_SIZE 224*_MB_    // 4K lossy 60% luma 50% chroma, VVC/AVS3 luma not compressed, support dual decode 2K+4K+decimate
+
+#ifdef NC_VBM_START_ADDRESS_KERNEL
+#if (NC_VBM_START_ADDRESS_KERNEL != NC_VDEC_BUFFER_START)
+#error "NC_VBM size doesn't match for kernel & drivers!"
+#endif
+#else
+#error "No define NC_VBM_START_ADDRESS_KERNEL"
+#endif
+
+#define NC_SCALER_MEMC_START (NC_VDEC_BUFFER_START + NC_VDEC_BUFFER_SIZE)
+#define NC_SCALER_MEMC_SIZE (0*_MB_)
+
+#if (NC_MEMC_START_ADDRESS_KERNEL != NC_SCALER_MEMC_START)
+#error "NC_Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCALER_MDOMAIN_START (NC_SCALER_MEMC_START + NC_SCALER_MEMC_SIZE)
+#define NC_SCALER_MDOMAIN_SIZE (0*_MB_) 
+
+#if (NC_MDOMAIN_START_ADDRESS_KERNEL != NC_SCALER_MDOMAIN_START)
+#error "NC_Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCALER_DI_NR_START (NC_SCALER_MDOMAIN_START + NC_SCALER_MDOMAIN_SIZE)
+#define NC_SCALER_DI_NR_SIZE (0*_MB_)
+
+#if (NC_DI_NR_START_ADDRESS_KERNEL != NC_SCALER_DI_NR_START)
+#error "NC_Scaler DI_NR size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCALER_VIP_START (NC_SCALER_DI_NR_START + NC_SCALER_DI_NR_SIZE)
+#define NC_SCALER_VIP_SIZE  (3*_MB_)
+
+#if (NC_VIP_START_ADDRESS_KERNEL != NC_SCALER_VIP_START)
+#error "NC_Scaler VIP size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCALER_OD_START (NC_SCALER_VIP_START + NC_SCALER_VIP_SIZE)
+#define NC_SCALER_OD_SIZE  9*_MB_  // RGB 8 bits
+
+#if (NC_OD_START_ADDRESS_KERNEL != NC_SCALER_OD_START)
+#error "NC_Scaler OD size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCALER_NN_START (NC_SCALER_OD_START + NC_SCALER_OD_SIZE)
+#define NC_SCALER_NN_SIZE (1*_MB_)
+
+#if (NC_NN_START_ADDRESS_KERNEL != NC_SCALER_NN_START)
+#error "NC_Scaler NN size doesn't match for kernel & drivers!"
+#endif
+
+#define NC_SCLAER_MODULE_START NC_SCALER_MEMC_START
+#define NC_SCALER_MODULE_SIZE_QUERY (NC_SCALER_MEMC_SIZE + NC_SCALER_MDOMAIN_SIZE + NC_SCALER_DI_NR_SIZE + NC_SCALER_VIP_SIZE + NC_SCALER_OD_SIZE + NC_SCALER_NN_SIZE)
+#define NC_SCALER_MODULE_SIZE DO_ALIGNMENT(NC_SCALER_MODULE_SIZE_QUERY, 4*_MB_)
+#define NC_SCALER_MODULE_BAND (NC_SCALER_MODULE_SIZE - NC_SCALER_MODULE_SIZE_QUERY)
+
+#if (NC_SCALER_MODULE_SIZE & 0x3FFFFF) // 4MB align
+#error "NC_Scaler module size didn't follow 4MB alignment"
+#endif
+
+#define NC_DEMUX_TP_BUFFER_START (NC_SCLAER_MODULE_START + NC_SCALER_MODULE_SIZE)
+#define NC_DEMUX_TP_BUFFER_SIZE 0  // must be 4MB page block alignment
+
+/**
+ *  --- TV 4K memory layout (Non-Carvedout) end ---
+ */
+
+
+/**
+ *  --- DIAS 2GB  memory layout start ---
+ */
+#define DDR_DIAS_2G_VIDEO_RINGBUFFER_START         0x3f000000
+#define DDR_DIAS_2G_VIDEO_RINGBUFFER_SIZE			0x1000000
+//#define DDR_DIAS_2G_VIDEO_RINGBUFFER_SIZE_K2L_ONLY 		 0x1800000
+//#define DDR_DIAS_2G_AUDIO_RINGBUFFER_START         (VIDEO_RINGBUFFER_START+VIDEO_RINGBUFFER_SIZE)
+//#define DDR_DIAS_2G_AUDIO_RINGBUFFER_SIZE                      0 //0x00600000
+
+
+#if IS_ENABLED(CONFIG_REALTEK_LOGBUF)
+#define DDR_DIAS_2G_CONST_LOGBUF_MEM_ADDR_START (0x1ca00000)
+#define DDR_DIAS_2G_CONST_LOGBUF_MEM_SIZE (512*1024)
+#else
+#define DDR_DIAS_2G_CONST_LOGBUF_MEM_ADDR_START 0
+#define DDR_DIAS_2G_CONST_LOGBUF_MEM_SIZE 0
+#endif
+
+#ifdef CONFIG_CUSTOMER_TV006	//for GAL reserve mem, 4MB align
+extern const int DDR_DIAS_2G_GAL_MEM_SIZE;
+extern const int DDR_DIAS_2G_GAL_MEM_ADDR_START;
+#else
+#define DDR_DIAS_2G_GAL_MEM_SIZE 0
+#define DDR_DIAS_2G_GAL_MEM_ADDR_START 0
+#endif
+
+#define DDR_DIAS_2G_VBM_START_ADDRESS_KERNEL       0x20000000  // + d000000 (+ 208M)
+#define DDR_DIAS_2G_MEMC_START_ADDRESS_KERNEL      0x2d000000  // + 0000000 (+   0M)
+#define DDR_DIAS_2G_MDOMAIN_START_ADDRESS_KERNEL   0x2d000000  // + 2000000 (+  32M)
+#define DDR_DIAS_2G_DI_NR_START_ADDRESS_KERNEL     0x2f000000  // + 0a00000 (+  10M)
+#define DDR_DIAS_2G_VIP_START_ADDRESS_KERNEL       0x2fa00000  // + 0300000 (+   3M)
+#define DDR_DIAS_2G_OD_START_ADDRESS_KERNEL        0x2fd00000  // + 0900000 (+   9M)
+#define DDR_DIAS_2G_NN_START_ADDRESS_KERNEL        0x30600000  // + 0100000 (+   1M)
+
+#define DDR_DIAS_2G_VDEC_BUFFER_START (DDR_DIAS_2G_VBM_START_ADDRESS_KERNEL)
+#define DDR_DIAS_2G_VDEC_BUFFER_SIZE 208*_MB_    // 4K lossy 60% luma 50% chroma w/o VVC and AVS3, need support CP, support dual decode 2K+4K+decimate
+
+#ifdef DDR_DIAS_2G_VBM_START_ADDRESS_KERNEL
+#if (DDR_DIAS_2G_VBM_START_ADDRESS_KERNEL != DDR_DIAS_2G_VDEC_BUFFER_START)
+#error "DIAS 2GB VBM size doesn't match for kernel & drivers!"
+#endif
+#else
+#error "DIAS 2GB No define VBM_START_ADDRESS_KERNEL"
+#endif
+
+#define DDR_DIAS_2G_SCALER_MEMC_START (DDR_DIAS_2G_VDEC_BUFFER_START + DDR_DIAS_2G_VDEC_BUFFER_SIZE)
+#define DDR_DIAS_2G_SCALER_MEMC_SIZE (0*_MB_)
+
+#if (DDR_DIAS_2G_MEMC_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_MEMC_START)
+#error "DIAS 2GB Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCALER_MDOMAIN_START (DDR_DIAS_2G_SCALER_MEMC_START + DDR_DIAS_2G_SCALER_MEMC_SIZE)
+#define DDR_DIAS_2G_SCALER_MDOMAIN_SIZE (32*_MB_) // 4K 16bit x 2 frames (2 pixel mode)
+
+#if (DDR_DIAS_2G_MDOMAIN_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_MDOMAIN_START)
+#error "DIAS 2GB Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCALER_DI_NR_START (DDR_DIAS_2G_SCALER_MDOMAIN_START + DDR_DIAS_2G_SCALER_MDOMAIN_SIZE)
+#define DDR_DIAS_2G_SCALER_DI_NR_SIZE (10*_MB_) // 4K rolling mode w/o MASNR
+
+#if (DDR_DIAS_2G_DI_NR_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_DI_NR_START)
+#error "DIAS 2GB Scaler DI_NR size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCALER_VIP_START (DDR_DIAS_2G_SCALER_DI_NR_START + DDR_DIAS_2G_SCALER_DI_NR_SIZE)
+#define DDR_DIAS_2G_SCALER_VIP_SIZE  (3*_MB_) // no demura
+
+#if (DDR_DIAS_2G_VIP_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_VIP_START)
+#error "DIAS 2GB Scaler VIP size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCALER_OD_START (DDR_DIAS_2G_SCALER_VIP_START + DDR_DIAS_2G_SCALER_VIP_SIZE)
+#define DDR_DIAS_2G_SCALER_OD_SIZE  9*_MB_  // RGB 8 bits
+
+#if (DDR_DIAS_2G_OD_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_OD_START)
+#error "DIAS 2GB Scaler OD size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCALER_NN_START (DDR_DIAS_2G_SCALER_OD_START + DDR_DIAS_2G_SCALER_OD_SIZE)
+#define DDR_DIAS_2G_SCALER_NN_SIZE (1*_MB_)
+
+#if (DDR_DIAS_2G_NN_START_ADDRESS_KERNEL != DDR_DIAS_2G_SCALER_NN_START)
+#error "DIAS 2GB Scaler NN size doesn't match for kernel & drivers!"
+#endif
+
+#define DDR_DIAS_2G_SCLAER_MODULE_START DDR_DIAS_2G_SCALER_MEMC_START
+#define DDR_DIAS_2G_SCALER_MODULE_SIZE_QUERY (DDR_DIAS_2G_SCALER_MEMC_SIZE + DDR_DIAS_2G_SCALER_MDOMAIN_SIZE + DDR_DIAS_2G_SCALER_DI_NR_SIZE + DDR_DIAS_2G_SCALER_VIP_SIZE + DDR_DIAS_2G_SCALER_OD_SIZE + DDR_DIAS_2G_SCALER_NN_SIZE)
+#define DDR_DIAS_2G_SCALER_MODULE_SIZE DO_ALIGNMENT(DDR_DIAS_2G_SCALER_MODULE_SIZE_QUERY, 4*_MB_)
+#define DDR_DIAS_2G_SCALER_MODULE_BAND (DDR_DIAS_2G_SCALER_MODULE_SIZE - DDR_DIAS_2G_SCALER_MODULE_SIZE_QUERY)
+
+#if (DDR_DIAS_2G_SCALER_MODULE_SIZE & 0x3FFFFF) // 4MB align
+#error "DIAS 2GB Scaler module size didn't follow 4MB alignment"
+#endif
+
+#define DDR_DIAS_2G_DEMUX_TP_BUFFER_START (DDR_DIAS_2G_SCLAER_MODULE_START + DDR_DIAS_2G_SCALER_MODULE_SIZE)
+#define DDR_DIAS_2G_DEMUX_TP_BUFFER_SIZE 0  // must be 4MB page block alignment
+
+#ifdef CONFIG_HIGHMEM_BW_CMA_REGION
+#define DDR_DIAS_2G_BW_HIGH_CMA_SIZE        (88*_MB_)	// Better BW CMA size in HighMem
+#endif
+
+/**
+ *  --- DIAS DIAS 2GB memory layout end ---
+ */
+
+/**
+ *  --- DISP_5K memory layout start ---
+ */
+#define DISP_5K_VIDEO_RINGBUFFER_START         0x20000000
+#define DISP_5K_VIDEO_RINGBUFFER_SIZE		   32*_MB_
+//#define DISP_5K_VIDEO_RINGBUFFER_SIZE_K2L_ONLY 		 0x1800000
+//#define DISP_5K_AUDIO_RINGBUFFER_START         (DISP_5K_VIDEO_RINGBUFFER_START+DISP_5K_VIDEO_RINGBUFFER_SIZE)
+//#define DISP_5K_AUDIO_RINGBUFFER_SIZE                      0 //0x00600000
+
+#if IS_ENABLED(CONFIG_REALTEK_LOGBUF)
+#define DISP_5K_CONST_LOGBUF_MEM_ADDR_START (0x1ca00000)
+#define DISP_5K_CONST_LOGBUF_MEM_SIZE (512*1024)
+#else
+#define DISP_5K_CONST_LOGBUF_MEM_ADDR_START 0
+#define DISP_5K_CONST_LOGBUF_MEM_SIZE 0
+#endif
+
+#ifdef CONFIG_CUSTOMER_TV006	//for GAL reserve mem, 4MB align
+extern const int DISP_5K_GAL_MEM_SIZE;
+extern const int DISP_5K_GAL_MEM_ADDR_START;
+#else
+#define DISP_5K_GAL_MEM_SIZE 0
+#define DISP_5K_GAL_MEM_ADDR_START 0
+#endif
+
+#define DISP_5K_VBM_START_ADDRESS_KERNEL       0x22000000  // + 16000000 (+ 352 M)
+#define DISP_5K_MEMC_START_ADDRESS_KERNEL      0x50000000  // + 00000000 (+   0 M)
+#define DISP_5K_MDOMAIN_START_ADDRESS_KERNEL   0x50000000  // + 0e300000 (+ 227 M)
+#define DISP_5K_DI_NR_START_ADDRESS_KERNEL     0x5e300000  // +  0a00000 (+  10 M)
+#define DISP_5K_VIP_START_ADDRESS_KERNEL       0x5ed00000  // +  0500000 (+   5 M)
+#define DISP_5K_OD_START_ADDRESS_KERNEL        0x5f200000  // +  0f00000 (+  15 M)
+#define DISP_5K_NN_START_ADDRESS_KERNEL        0x60100000  // +  0200000 (+   2 M)
+
+#define DISP_5K_VDEC_BUFFER_START (DISP_5K_VBM_START_ADDRESS_KERNEL)
+#define DISP_5K_VDEC_BUFFER_SIZE 352*_MB_
+
+#if (DISP_5K_VBM_START_ADDRESS_KERNEL != DISP_5K_VDEC_BUFFER_START)
+#error "DISP_5K VBM size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_MEMC_START (DISP_5K_MEMC_START_ADDRESS_KERNEL)
+#define DISP_5K_SCALER_MEMC_SIZE (0*_MB_)
+
+#if (DISP_5K_MEMC_START_ADDRESS_KERNEL != DISP_5K_SCALER_MEMC_START)
+#error "DISP_5K MEMC size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_MDOMAIN_START (DISP_5K_SCALER_MEMC_START + DISP_5K_SCALER_MEMC_SIZE)
+#define DISP_5K_SCALER_MDOMAIN_SIZE (227*_MB_) // For M-Doamin, SUB, I3DDMA co-buffer
+
+#if (DISP_5K_MDOMAIN_START_ADDRESS_KERNEL != DISP_5K_SCALER_MDOMAIN_START)
+#error "DISP_5K Scaler M-domain size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_DI_NR_START (DISP_5K_SCALER_MDOMAIN_START + DISP_5K_SCALER_MDOMAIN_SIZE)
+#define DISP_5K_SCALER_DI_NR_SIZE (10*_MB_)
+
+#if (DISP_5K_DI_NR_START_ADDRESS_KERNEL != DISP_5K_SCALER_DI_NR_START)
+#error "DISP_5K Scaler DI_NR size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_VIP_START (DISP_5K_SCALER_DI_NR_START + DISP_5K_SCALER_DI_NR_SIZE)
+#define DISP_5K_SCALER_VIP_SIZE  (5*_MB_)
+
+#if (DISP_5K_VIP_START_ADDRESS_KERNEL != DISP_5K_SCALER_VIP_START)
+#error "DISP_5K Scaler VIP size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_OD_START (DISP_5K_SCALER_VIP_START + DISP_5K_SCALER_VIP_SIZE)
+#define DISP_5K_SCALER_OD_SIZE  15*_MB_
+
+#if (DISP_5K_OD_START_ADDRESS_KERNEL != DISP_5K_SCALER_OD_START)
+#error "DISP_5K Scaler OD size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCALER_NN_START (DISP_5K_SCALER_OD_START + DISP_5K_SCALER_OD_SIZE)
+#define DISP_5K_SCALER_NN_SIZE (2*_MB_)
+
+#if (DISP_5K_NN_START_ADDRESS_KERNEL != DISP_5K_SCALER_NN_START)
+#error "DISP_5K Scaler NN size doesn't match for kernel & drivers!"
+#endif
+
+#define DISP_5K_SCLAER_MODULE_START DISP_5K_SCALER_MEMC_START
+#define DISP_5K_SCALER_MODULE_SIZE_QUERY (DISP_5K_SCALER_MEMC_SIZE +			\
+										  DISP_5K_SCALER_MDOMAIN_SIZE + 		\
+										  DISP_5K_SCALER_DI_NR_SIZE + 			\
+										  DISP_5K_SCALER_NN_SIZE + 				\
+										  DISP_5K_SCALER_VIP_SIZE + 			\
+										  DISP_5K_SCALER_OD_SIZE)
+#define DISP_5K_SCALER_MODULE_SIZE DO_ALIGNMENT(DISP_5K_SCALER_MODULE_SIZE_QUERY, 4*_MB_)
+#define DISP_5K_SCALER_MODULE_BAND (DISP_5K_SCALER_MODULE_SIZE - DISP_5K_SCALER_MODULE_SIZE_QUERY)
+
+#if (DISP_5K_SCALER_MODULE_SIZE & 0x3FFFFF) // 4MB align
+#error "DISP_5K Scaler module size didn't follow 4MB alignment"
+#endif
+
+#define DISP_5K_DEMUX_TP_BUFFER_START (DISP_5K_SCLAER_MODULE_START + DISP_5K_SCALER_MODULE_SIZE)
+#define DISP_5K_DEMUX_TP_BUFFER_SIZE 0
+
+/**
+ *  --- DISP_5K memory layout end ---
+ */
+
+#define RTK_GPU_FW_SIZE 0 //(512*1024)  not use now
+
+#define CMA_HIGHMEM_DIAS_2GB 704*1024*1024
+#define CMA_HIGHMEM_TV_4K 688*1024*1024
+
+#define CMA_GPU_4K_SIZE 0
+
+#ifdef RTK_MEM_LAYOUT_DEVICETREE
+    // test if not used
+#else
+#define ZRAM_RESERVED_SIZE 128*_MB_
+
+// TODO: shall be get from dts
+#define RTK_SPI_ADDR    0x80200000
+#define RTK_SPI_SIZE    0x02000000
+#endif
+
+#endif //_RTK_MEMORY_LAYOUT_H

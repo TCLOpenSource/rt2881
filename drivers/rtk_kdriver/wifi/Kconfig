@@ -1,0 +1,25 @@
+config RTL8822CU
+    tristate "Realtek 8822C USB WiFi (WIFI-5)"
+    depends on USB && RTK_KDRV_WIFI
+    select RTLWIFI
+    select RTLWIFI_USB
+    help
+      Help message of RTL8822CU
+
+config RTL8822EU
+    tristate "Realtek 8822E USB WiFi (WIFI-5)"
+    depends on USB && RTK_KDRV_WIFI
+    select RTLWIFI
+    select RTLWIFI_USB
+    help
+      Help message of RTL8822EU
+
+config RTL8852BU
+    tristate "Realtek 8852B USB WiFi (WIFI-6)"
+    depends on USB && RTK_KDRV_WIFI
+    select RTLWIFI
+    select RTLWIFI_USB
+    help
+      Help message of RTL8852BU
+
+

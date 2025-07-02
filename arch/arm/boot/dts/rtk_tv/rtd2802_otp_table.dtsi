@@ -1,0 +1,29 @@
+/* rtk 6748 otp table */
+
+/ {
+	rtk_otp_table {
+		compatible = "realtek,rtk-otp_table";
+		func_boot_type_sel     = <480  0    1>;
+		func_mem_obf_en        = <485  0    2>;
+		chip_type_remark_en    = <447 0    1>;
+		wafer_info_slot        = <992 0    69>;
+		hw_usb_disconnect_level = <1544 0    16>;
+		hw_usb_squelch_level    = <1502 0    16>;
+		hw_usb_swing_level      = <1583 0    16>;
+		hw_usb_disconnect_done  = <1560 0    1>;
+		hw_usb_squelch_done     = <1518 0    1>;
+		hw_usb_swing_done       = <1599 0    1>;
+		hw_cpu_package_size     = <390 454    2>; 
+		chip_type_dp_rx_disable =<354 418 1>;
+		chip_type_dp_tx_disable =<355 419 1>;
+		hw_mp_status_ft_iddq_done = <1538 0 1>;
+		hw_iddq_core_power = <1519 0 9>;
+		hw_iddq_scpu_power = <1528 0 9>;     
+		hw_vd_adc_ldo           = <1715 0    4>;
+		hw_earc_cp = <1719 0 9>;
+		hw_earc_ft = <1571 0 8>; 
+		sw_func_hdr_10_plus = <370 434 1>;
+		hw_hdmi_rx_z0           = <1649 0    5>;
+		hw_hdmi_rx_z0_done           = <1654 0    1>;  
+	};
+};

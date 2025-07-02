@@ -1,0 +1,5 @@
+config RTK_KDRV_DELIVERY
+	tristate "Driver for Delivery HAL Manager"
+	default n
+	help
+	  Driver for Delivery HAL Manager

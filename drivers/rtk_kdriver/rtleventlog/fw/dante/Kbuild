@@ -1,0 +1,4 @@
+ccflags-y += -I drivers/rtk_kdriver/rtleventlog
+obj-y  += osal.o
+subdir-ccflags-y = -I $(src)
+

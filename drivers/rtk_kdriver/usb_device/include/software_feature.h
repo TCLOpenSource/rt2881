@@ -1,0 +1,25 @@
+#ifndef __SOFTWARE_FEATURE_H
+#define __SOFTWARE_FEATURE_H
+UINT8 GetUAC_UpStream_UAC2_Enable(void);
+UINT8 GetUAC_UpStream_UAC1_Enable(void);
+UINT8 GetUAC_DownStream_Enable(void);
+UINT8 Get_PID(void);
+UINT8 Get_CID(void);
+UINT8 GetPD_Mode(void);
+UINT8 GetUAC_Enable(void);
+UINT8 GetAudio_PCM_Audio_Function(void);
+UINT8 GetUVC_Enable(void);
+UINT8 Get_Chip_version(void);
+UINT8 GetTypeC_Fuction(void);
+UINT8 Get_UVC_Format_MJPEG_Enable(void);
+UINT8 Get_UVC_Format_YUV2_Enable(void);
+UINT8 Get_UVC_Format_RGB32_Enable(void);
+UINT8 Get_UVC_Format_RGB24_Enable(void);
+UINT8 Get_UVC_Format_P010_Enable(void);
+UINT8 Get_UVC_Format_NV12_Enable(void);
+UINT8 Get_UVC_Format_I420_Enable(void);
+UINT8 Get_UVC_Format_M420_Enable(void);
+UINT8 Get_UVC_Control_Processing_Unit_Enable(void);
+UINT8 Get_Ext_DP_MUX_Select(void);
+UINT8 Get_USB_HID_Enable(void);
+#endif

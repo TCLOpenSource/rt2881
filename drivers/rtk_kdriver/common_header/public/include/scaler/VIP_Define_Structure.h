@@ -1,0 +1,177 @@
+#ifndef __VIP_DEFINE_STRUCTURE_H__
+#define __VIP_DEFINE_STRUCTURE_H__
+
+typedef enum{
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Set = 0,
+
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Get,
+
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Set_B_CH,
+
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Set_Sub,
+
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Get_Sub,
+
+	VPQ_DEV_EXTERN_VPQ_DATA_EXTERN_CMD_Mode_MAX,
+} VPQ_DEV_EXTERN_HAL_VPQ_DATA_EXTERN_CMD_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_SET_D_3DLUT_Offset_Set_6Axis = 0,
+
+	VPQ_DEV_EXT_SET_D_3DLUT_Offset_D3DLUTbyCS_6Axis_TBL,
+
+	VPQ_DEV_EXT_SET_D_3DLUT_Offset_D3DLUTbyCS_Decode_TBL,
+	
+	VPQ_DEV_EXT_SET_D_3DLUT_Offset_Mode_MAX,
+} VPQ_DEV_EXTERN_SET_D_3DLUT_Offset_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_SET_RADCR_Para_DBC_LDID = 0,
+
+	VPQ_DEV_EXT_SET_RADCR_Para_PeakingID,
+	
+	VPQ_DEV_EXT_SET_RADCR_Para_Mode_MAX,
+} VPQ_DEV_EXTERN_SET_RADCR_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_RTNR_CMA_Mode = 0,
+
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Contrast,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Brightness,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Saturation,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Hue,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_ColorSpace,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_StructColorDataFacMode_EXTERN,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_SLR_HDR_TABLE_OETF_Curve_Ctrl,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_SLR_HDR_TABLE_OETF_Setting_Ctrl,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_HDR3DLUT_Offset,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Data_Range,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_BlueStretch,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_ICM_byIndex,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_DCCMode,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_DCC_byIndex,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_WhiteExtension,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_BlackExtension,
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Dynamic_Black_Equalize,
+	
+	VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Mode_MAX,
+} VPQ_DEV_EXTERN_ACCESS_VPQ_byPara_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_APDEM_INIT_PARA_Set_Ini_Table = 0,
+	VPQ_DEV_EXT_APDEM_INIT_PARA_Set_Factory_Color_Chromaticity,
+	VPQ_DEV_EXT_APDEM_INIT_PARA_Set_Factory_EOTF_OETF,
+	
+	VPQ_DEV_EXTERN_APDEM_INIT_PARA_Mode_MAX,
+} VPQ_DEV_EXTERN_APDEM_INIT_PARA;
+
+typedef enum{
+	VPQ_DEV_EXT_ACCESS_OSD_byParameter_OSDSR_table_from_ini = 0,
+	
+	VPQ_DEV_EXT_ACCESS_OSD_byParameter_Mode_MAX,
+} VPQ_DEV_EXT_ACCESS_OSD_byParameter;
+
+typedef enum{
+	VPQ_DEV_EXT_ACCESS_GLC_Para_EnMode_Set = 0,
+	VPQ_DEV_EXT_ACCESS_GLC_Para_TBL_Set,
+	VPQ_DEV_EXT_ACCESS_GLC_Para_Curve_index_Set,
+	
+	VPQ_DEV_EXT_ACCESS_GLC_Para_MAX,
+} VPQ_DEV_EXT_ACCESS_GLC_Para;
+
+typedef enum{
+	VPQ_DEV_EXT_OverDriver_Para_OD_Gain = 0,
+
+	VPQ_DEV_EXT_OverDriver_Para_OD_BIN_TBL_SET,
+
+	VPQ_DEV_EXT_OverDriver_Para_OD_BIN_TBL_CRC_Get,
+	VPQ_DEV_EXT_OverDriver_Para_OD_OnOff = VPQ_DEV_EXT_OverDriver_Para_OD_BIN_TBL_CRC_Get,
+	
+	VPQ_DEV_EXTERN_OverDriver_Para_Mode_MAX,
+} VPQ_DEV_EXTERN_OverDriver_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_IOC_OUTGAMMA_Freq_VRR_Mode_Set = 0,
+	VPQ_DEV_EXT_IOC_OUTGAMMA_Get = VPQ_DEV_EXT_IOC_OUTGAMMA_Freq_VRR_Mode_Set,
+	VPQ_DEV_EXT_IOC_OUTGAMMA_BIN_TBL_Set,
+	VPQ_DEV_EXT_IOC_OUTGAMMA_AUTO_ACC_Set,
+	VPQ_DEV_EXT_IOC_OUTGAMMA_BIN_TBL_CRC_Get = VPQ_DEV_EXT_IOC_OUTGAMMA_AUTO_ACC_Set,	
+	
+	VPQ_EXTERN_IOC_ACCESS_TCON_OUTGAMMA_Para_Mode_MAX,
+} VPQ_EXTERN_IOC_ACCESS_TCON_OUTGAMMA_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_IOC_DEMURA_Encode_TBL = 0,
+	VPQ_DEV_EXT_IOC_DEMURA_Encode_TBL_Size_Get = VPQ_DEV_EXT_IOC_DEMURA_Encode_TBL,
+	
+	VPQ_DEV_EXT_IOC_DEMURA_CSOTPDM,
+	VPQ_DEV_EXT_IOC_DEMURA_Encode_TBL_Get = VPQ_DEV_EXT_IOC_DEMURA_CSOTPDM,
+	
+	VPQ_DEV_EXT_IOC_DEMURA_HKCPDM,
+	VPQ_DEV_EXT_IOC_DEMURA_Encode_TBL_CRC_Get = VPQ_DEV_EXT_IOC_DEMURA_HKCPDM,
+	
+	VPQ_DEV_EXT_IOC_DEMURA_CHOTPDM,
+
+	VPQ_DEV_EXT_IOC_DEMURA_INNXPDM,	
+	
+	VPQ_EXTERN_IOC_ACCESS_TCON_DEMURA_Para_Mode_MAX,
+} VPQ_EXTERN_IOC_ACCESS_TCON_DEMURA_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_IOC_VALC_TBL_Size_Get = 0,
+	VPQ_DEV_EXT_IOC_VALC_BIN_TBL_Set,
+	VPQ_DEV_EXT_IOC_VALC_TBL_Get = VPQ_DEV_EXT_IOC_VALC_BIN_TBL_Set,
+	VPQ_DEV_EXT_IOC_VALC_BIN_TBL_CRC_Get,
+	
+	VPQ_EXTERN_IOC_ACCESS_TCON_VALC_Para_Mode_MAX,
+} VPQ_EXTERN_IOC_ACCESS_TCON_VALC_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_IOC_LINEOD_TBL_Size_Get = 0,
+	VPQ_DEV_EXT_IOC_LINEOD_BIN_TBL_Set,
+	VPQ_DEV_EXT_IOC_LINEOD_TBL_Get = VPQ_DEV_EXT_IOC_LINEOD_BIN_TBL_Set,
+	VPQ_DEV_EXT_IOC_LINEOD_BIN_TBL_CRC_Get,
+	
+	VPQ_EXTERN_IOC_ACCESS_TCON_LINEOD_Para_Mode_MAX,
+} VPQ_EXTERN_IOC_ACCESS_TCON_LINEOD_Para_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_INV_GAMMA_byGain = 0,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_GAMMA_byGain,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_INV_OUT_GAMMA_byGain,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_OUT_GAMMA_byGain,
+
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_INV_GAMMA_byVIP_Gamma_Struct,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_GAMMA_byVIP_Gamma_Struct,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_INV_OUT_GAMMA_byVIP_Gamma_Struct,
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_OUT_GAMMA_byVIP_Gamma_Struct,
+
+	VPQ_DEV_EXT_IOC_SET_Gamma_byParameters_Set_INV_OUT_GAMMA,
+	
+	VPQ_EXTERN_IOC_SET_Gamma_byParameters_Mode_MAX,
+} VPQ_EXTERN_IOC_SET_Gamma_byParameters_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_SET_Shadow_Detail_Info = 0,
+	VPQ_DEV_EXT_SET_Shadow_Boot_Info,
+	
+	VPQ_DEV_EXTERN_SET_Shadow_Detail_Mode_MAX,
+} VPQ_DEV_EXTERN_SET_Shadow_Detail_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_SET_Demo_Mode_byParameter_UserMenu_Set = 0,
+	VPQ_DEV_EXT_SET_Demo_Mode_byParameter_2D_Peaking_Edge_Debug_Mode,
+	VPQ_DEV_EXT_SET_Demo_Mode_byParameter_SemanticDemo_Mode,
+	VPQ_DEV_EXT_SET_Demo_Mode_byParameter_SemanticDemo_Buffer_Access,
+	
+	VPQ_DEV_EXTERN_SET_Demo_Mode_byParameter_Mode_MAX,
+} VPQ_DEV_EXTERN_SET_Demo_Mode_byParameter_Mode;
+
+typedef enum{
+	VPQ_DEV_EXT_SET_AI_Para_TBL_set = 0,
+	VPQ_DEV_EXT_SET_AI_Para_AI_Mode_set,
+	
+	VPQ_DEV_EXTERN_SET_AI_Para_Mode_MAX,
+} VPQ_DEV_EXTERN_SET_AI_Para_Mode;
+
+#endif
